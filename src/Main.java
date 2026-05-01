@@ -1,29 +1,32 @@
 public class Main {
     public static void main(String[] args) {
-        Produto p1 = new Produto("Caneta", 2.50);
-        Produto p2 = new Produto("Caderno", 15.90);
+        Livro l1 = new Livro("Clean Code", "978-0132350884");
+        Livro l2 = new Livro("Clean Code", "978-0132350884");
 
-        System.out.println(p1);
-
-        System.out.println("Item: " + p2);
+        System.out.println(l1 == l2);       // Saída: false
+        System.out.println(l1.equals(l2));  // Saída: false
 
         /*
-          O QUE MUDOU NA SAÍDA?
-          Agora, em vez de aparecer o endereço de memória (Produto@hash),
-          aparece o conteúdo legível formatado:
-          Produto{nome='Caneta', preco=2.5}
 
-          O toString() É CHAMADO AUTOMATICAMENTE NA CONCATENAÇÃO?
-          Sim. Quando fazemos "Texto" + objeto, o Java invoca o método
-          toString() do objeto por trás das cenas para transformar o
-          objeto em uma representação textual.
+          POR QUE (l1 == l2) É FALSE?
+          Porque o operador '==' compara referências de memória. Como usamos
+          'new' duas vezes, o Java criou dois objetos em locais diferentes
+          da memória Heap, mesmo que os dados internos sejam idênticos.
 
-          CONCLUSÕES:
-          O método toString() é chamado automaticamente em:
-          - System.out.println(objeto)
-          - Concatenação com Strings usando o operador "+"
-          - Visualização de variáveis durante o Debug (o IDE usa o toString
-            para mostrar o valor do objeto no painel).
+          POR QUE l1.equals(l2) TAMBÉM RETORNA FALSE SEM OVERRIDE?
+          Por padrão, a classe Object (de onde Livro herda) implementa o método
+          .equals() usando exatamente o operador '=='.
+
+          Ou seja, para o Java "padrão", a igualdade é a mesma coisa que a
+          identidade de memória. Se você não escrever o seu próprio método
+          .equals() na classe Livro comparando os atributos (titulo e isbn),
+          o Java não tem como saber que dois livros com o mesmo ISBN devem
+          ser considerados o "mesmo" livro.
+
+          CONCLUSÃO:
+          Para que .equals() retorne true em objetos customizados, é obrigatório
+          sobrescrever (@Override) o método equals() e definir a regra de negócio
+          da comparação (ex: comparar se os ISBNs são iguais).
          */
     }
 }
