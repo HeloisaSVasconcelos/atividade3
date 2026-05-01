@@ -1,32 +1,29 @@
 public class Main {
     public static void main(String[] args) {
         Livro l1 = new Livro("Clean Code", "978-0132350884");
-        Livro l2 = new Livro("Clean Code", "978-0132350884");
+        Livro l2 = new Livro("Código Limpo (Traduzido)", "978-0132350884");
 
-        System.out.println(l1 == l2);       // Saída: false
-        System.out.println(l1.equals(l2));  // Saída: false
+        System.out.println("Mesmo ISBN, títulos diferentes: " + l1.equals(l2));
+
+        System.out.println("Comparando com null: " + l1.equals(null));
+        System.out.println("Comparando com uma String: " + l1.equals("978-0132350884"));
 
         /*
 
-          POR QUE (l1 == l2) É FALSE?
-          Porque o operador '==' compara referências de memória. Como usamos
-          'new' duas vezes, o Java criou dois objetos em locais diferentes
-          da memória Heap, mesmo que os dados internos sejam idênticos.
+         SÃO IGUAIS COM TÍTULOS DIFERENTES?
+         Sim. Como o critério no equals() é apenas o ISBN, o Java retornará 'true'.
+         Isso é útil para identificar o mesmo produto em edições ou traduções diferentes.
 
-          POR QUE l1.equals(l2) TAMBÉM RETORNA FALSE SEM OVERRIDE?
-          Por padrão, a classe Object (de onde Livro herda) implementa o método
-          .equals() usando exatamente o operador '=='.
+         LANÇA EXCEÇÃO COM NULL OU STRING?
+         Não. O uso do 'instanceof' protege o código. Se o objeto for null ou
+         de outro tipo (como String), o 'instanceof' retorna 'false' e o
+         método encerra graciosamente sem causar um NullPointerException.
 
-          Ou seja, para o Java "padrão", a igualdade é a mesma coisa que a
-          identidade de memória. Se você não escrever o seu próprio método
-          .equals() na classe Livro comparando os atributos (titulo e isbn),
-          o Java não tem como saber que dois livros com o mesmo ISBN devem
-          ser considerados o "mesmo" livro.
-
-          CONCLUSÃO:
-          Para que .equals() retorne true em objetos customizados, é obrigatório
-          sobrescrever (@Override) o método equals() e definir a regra de negócio
-          da comparação (ex: comparar se os ISBNs são iguais).
+         POR QUE COMPARAMOS PELO ISBN E NÃO PELO TÍTULO?
+         O ISBN é um IDENTIFICADOR ÚNICO universal (como um CPF para livros).
+         Títulos podem se repetir ou ter variações (ex: "Java" vs "Java: 2ª Edição"),
+         mas o ISBN garante que estamos falando do mesmo registro técnico.
+         Em sistemas reais, sempre usamos chaves primárias ou IDs únicos para equals.
          */
     }
 }
