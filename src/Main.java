@@ -1,25 +1,29 @@
 public class Main {
     public static void main(String[] args) {
-
-        Produto p1 = new Produto("Teclado Mecânico", 250.00);
-        Produto p2 = new Produto("Mouse Gamer", 150.00);
-
+        Produto p1 = new Produto("Caneta", 2.50);
+        Produto p2 = new Produto("Caderno", 15.90);
 
         System.out.println(p1);
-        System.out.println(p2);
+
+        System.out.println("Item: " + p2);
 
         /*
-          SAÍDA NO CONSOLE:
-          Produto@15db9742
-          Produto@6d06d69c
+          O QUE MUDOU NA SAÍDA?
+          Agora, em vez de aparecer o endereço de memória (Produto@hash),
+          aparece o conteúdo legível formatado:
+          Produto{nome='Caneta', preco=2.5}
 
-          O QUE APARECE?
-          Aparece o nome da classe seguido de um símbolo "@" e um código
-          hexadecimal (que representa o hashcode do objeto na memória).
+          O toString() É CHAMADO AUTOMATICAMENTE NA CONCATENAÇÃO?
+          Sim. Quando fazemos "Texto" + objeto, o Java invoca o método
+          toString() do objeto por trás das cenas para transformar o
+          objeto em uma representação textual.
 
-          É LEGÍVEL?
-          Não é legível para um usuário final ou para entender o conteúdo do objeto.
-          Ele não mostra o "nome" ou o "preço", apenas a referência do objeto na JVM.
+          CONCLUSÕES:
+          O método toString() é chamado automaticamente em:
+          - System.out.println(objeto)
+          - Concatenação com Strings usando o operador "+"
+          - Visualização de variáveis durante o Debug (o IDE usa o toString
+            para mostrar o valor do objeto no painel).
          */
     }
 }
